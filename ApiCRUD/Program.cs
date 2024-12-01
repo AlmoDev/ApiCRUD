@@ -1,4 +1,5 @@
 using ApiCRUD;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,11 +28,10 @@ builder.Services.AddCors(opciones =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseHttpsRedirection();
 
@@ -40,5 +40,6 @@ app.UseCors();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGet("/", [EnableCors(policyName: "libre")] () => "servicio ApiCrudAlex activo!!!");
 
 app.Run();
